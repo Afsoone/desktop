@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>خطا در بارگذاری</title>
+    <style>
+      body {
+        font-family: "Vazir", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #4b0082; /* Purple background */
+        color: #ffd700; /* Yellow text color */
+      }
+      .error-container {
+        text-align: center;
+        padding: 30px;
+        background-color: #ffd700; /* Yellow background for container */
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        color: #4b0082; /* Purple text color for container */
+      }
+      h1 {
+        color: #4b0082; /* Purple color for the main header */
+        margin-bottom: 20px;
+      }
+      p {
+        margin-bottom: 15px;
+      }
+      .notice {
+        font-size: 1.1em;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4b0082; /* Purple button background */
+        color: #ffd700; /* Yellow button text */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #6a0dad; /* Slightly lighter purple on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <h1>خطا در بارگذاری</h1>
+      <p>
+        متأسفانه در بارگذاری صفحه مشکلی پیش آمده است. لطفاً اتصال اینترنت خود را
+        بررسی کرده و دوباره تلاش کنید.
+      </p>
+      <p class="notice">اگر از فیلتر شکن استفاده میکنید آن را قطع کنید.</p>
+      <button onclick="window.location.reload()">تلاش مجدد</button>
+    </div>
+  </body>
+</html>

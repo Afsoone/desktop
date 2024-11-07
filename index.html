@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>اپلیکیشن افسونه</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @font-face {
+        font-family: "Vazir";
+        src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v27.2.2/dist/Vazir-Regular.woff2")
+          format("woff2");
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Vazir";
+        background-color: transparent;
+      }
+      #app-container {
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background-color: #121212;
+        border-radius: 10px;
+        position: relative;
+      }
+      #titlebar {
+        height: 40px;
+        background-color: #1a1a1a;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        -webkit-app-region: drag;
+        position: relative;
+        border-radius: 10px 10px 0 0;
+      }
+      #title-container {
+        display: flex;
+        align-items: center;
+      }
+      #app-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+      }
+      #title {
+        font-size: 16px;
+      }
+      #controls {
+        display: flex;
+        -webkit-app-region: no-drag;
+        align-items: center;
+      }
+      .control-button {
+        width: 30px;
+        height: 30px;
+        border: none;
+        background-color: transparent;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        margin: 2px;
+      }
+      .control-button:hover {
+        background-color: #ffc400;
+      }
+      #user-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: #ffc400;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      #user-button:hover {
+        box-shadow: 0 0 10px #ffc400;
+      }
+      #webview-container {
+        flex-grow: 1;
+        position: relative;
+        overflow: hidden;
+      }
+      webview {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 60px; /* Adjust for bottom menu height */
+      }
+      #loading-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        display: none;
+      }
+      #loading-animation {
+        width: 10px;
+        height: 10px;
+        background-color: #ffc400;
+        border-radius: 50%;
+        animation: pulse 1s infinite ease-in-out;
+        margin-right: 10px;
+      }
+      #loading-text {
+        font-size: 15px;
+        color: #ffc400;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(0.8);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.8);
+          opacity: 0.7;
+        }
+      }
+      /* Updated styles for bottom menu */
+      #bottom-menu {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #1a1a1a;
+        height: 60px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-top: 1px solid #333;
+        border-radius: 0 0 10px 10px;
+        z-index: 1000;
+      }
+      .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+        transition: all 0.3s ease;
+      }
+      .menu-item i {
+        font-size: 24px;
+        margin-bottom: 4px;
+      }
+      .menu-item:hover {
+        color: #ffc400;
+        text-shadow: 0 0 20px #ffc400;
+      }
+      .menu-item:hover i {
+        filter: drop-shadow(0 0 20px #ffc400);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-container">
+      <div id="titlebar">
+        <div id="title-container">
+          <img id="app-icon" src="afsoone.ico" alt="Afsooneh Icon" />
+          <div id="title">سرزمین افسونه</div>
+        </div>
+        <div id="loading-container">
+          <div id="loading-animation"></div>
+          <div id="loading-text">...درحال بارگزاری</div>
+        </div>
+        <div id="controls">
+          <button id="user-button">
+            <i class="fas fa-user"></i>
+          </button>
+          <button class="control-button" id="minimize-button">&#8211;</button>
+          <button class="control-button" id="maximize-button">&#9633;</button>
+          <button class="control-button" id="close-button">&#10005;</button>
+        </div>
+      </div>
+      <div id="webview-container">
+        <webview src="https://afsoone.com" allowpopups></webview>
+      </div>
+      <div id="bottom-menu">
+        <a href="https://www.afsoone.com" class="menu-item">
+          <i class="fas fa-home"></i>
+          <span>خانه</span>
+        </a>
+        <a href="https://www.afsoone.com/Animation" class="menu-item">
+          <i class="fas fa-film"></i>
+          <span>انیمیشن</span>
+        </a>
+        <a href="https://www.afsoone.com/digital-book" class="menu-item">
+          <i class="fas fa-book"></i>
+          <span>کتابخونه</span>
+        </a>
+        <a href="https://www.afsoone.com/music" class="menu-item">
+          <i class="fas fa-podcast"></i>
+          <span>پادکست</span>
+        </a>
+        <a href="https://www.afsoone.com/web-game" class="menu-item">
+          <i class="fas fa-gamepad"></i>
+          <span>بازی</span>
+        </a>
+        <a href="https://afsoone.com/adults" class="menu-item">
+          <i class="fas fa-users"></i>
+          <span>والدین</span>
+        </a>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("minimize-button")
+        .addEventListener("click", () => window.electronAPI.minimize());
+      document
+        .getElementById("maximize-button")
+        .addEventListener("click", () => window.electronAPI.maximize());
+      document
+        .getElementById("close-button")
+        .addEventListener("click", () => window.electronAPI.close());
+      document.getElementById("user-button").addEventListener("click", () => {
+        document
+          .querySelector("webview")
+          .loadURL("https://afsoone.com/my-account");
+      });
+
+      const webview = document.querySelector("webview");
+      const loadingContainer = document.getElementById("loading-container");
+
+      webview.addEventListener("dom-ready", () => {
+        webview.insertCSS(`
+          ::-webkit-scrollbar {
+          width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #1e1e1e;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #ffc400;
+          border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #ff00ae;
+        }
+        `);
+      });
+
+      webview.addEventListener("did-start-loading", () => {
+        loadingContainer.style.display = "flex";
+      });
+
+      webview.addEventListener("did-stop-loading", () => {
+        loadingContainer.style.display = "none";
+      });
+
+      window.electronAPI.onLoadUrl((event, url) => {
+        webview.loadURL(url);
+      });
+
+      // Load cached session data
+      const userDataKey = "user-session";
+      const cachedUserData = window.electronAPI.getCachedData(userDataKey);
+
+      if (cachedUserData) {
+        console.log("Loaded from cache:", cachedUserData);
+      } else {
+        // Fetch and cache session data
+        webview.addEventListener("dom-ready", () => {
+          webview
+            .executeJavaScript(
+              `
+          (function() {
+            const cookieValue = document.cookie
+              .split('; ')
+              .find(row => row.startsWith('d_user_session='))
+              ?.split('=')[1];
+            return cookieValue || null;
+          })();
+        `
+            )
+            .then((sessionData) => {
+              if (sessionData) {
+                window.electronAPI.cacheData(userDataKey, sessionData);
+                console.log("Session data cached:", sessionData);
+              }
+            });
+        });
+      }
+
+      // Handle bottom menu clicks
+      document.querySelectorAll("#bottom-menu .menu-item").forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          const url = e.currentTarget.getAttribute("href");
+          webview.loadURL(url);
+        });
+      });
+    </script>
+  </body>
+</html>
