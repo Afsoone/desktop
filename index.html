@@ -78,21 +78,36 @@
         background-color: #ffc400;
       }
       #user-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         background-color: transparent;
         color: #ffc400;
-        border: none;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
+        border: 1px solid #ffc400;
+        border-radius: 5px;
+        padding: 5px 10px;
         margin-right: 10px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        font-family: "Vazir";
+        font-size: 12px;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
       #user-button:hover {
-        box-shadow: 0 0 10px #ffc400;
+        background-color: #ffc400;
+        color: #1a1a1a;
+      }
+      #sub-button {
+        background-color: transparent;
+        color: #ffc400;
+        border: 1px solid #ffc400;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-right: 10px;
+        cursor: pointer;
+        font-family: "Vazir";
+        font-size: 12px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      #sub-button:hover {
+        background-color: #ffc400;
+        color: #1a1a1a;
       }
       #webview-container {
         flex-grow: 1;
@@ -189,11 +204,16 @@
         </div>
         <div id="loading-container">
           <div id="loading-animation"></div>
-          <div id="loading-text">...درحال بارگزاری</div>
+          <div id="loading-text">...درحال بارگذاری</div>
         </div>
         <div id="controls">
           <button id="user-button">
+            پنل کاربری
             <i class="fas fa-user"></i>
+          </button>
+          <button id="sub-button">
+            خرید اشتراک
+            <i class="fas fa-gem"></i>
           </button>
           <button class="control-button" id="minimize-button">&#8211;</button>
           <button class="control-button" id="maximize-button">&#9633;</button>
@@ -214,7 +234,11 @@
         </a>
         <a href="https://www.afsoone.com/digital-book" class="menu-item">
           <i class="fas fa-book"></i>
-          <span>کتابخونه</span>
+          <span>کتابخانه</span>
+        </a>
+        <a href="https://www.afsoone.com/sargarmi" class="menu-item">
+          <i class="fas fa-chess-board"></i>
+          <span>سرگرمی</span>
         </a>
         <a href="https://www.afsoone.com/music" class="menu-item">
           <i class="fas fa-podcast"></i>
@@ -244,6 +268,9 @@
         document
           .querySelector("webview")
           .loadURL("https://afsoone.com/my-account");
+      });
+      document.getElementById("sub-button").addEventListener("click", () => {
+        document.querySelector("webview").loadURL("https://afsoone.com/sub");
       });
 
       const webview = document.querySelector("webview");
